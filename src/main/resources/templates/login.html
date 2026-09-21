@@ -14,7 +14,7 @@
     <div class="bg-glow-2"></div>
 
     <div class="split-layout">
-        <!-- Lado Esquerdo: Vitrine 3D Interativa com Fallback -->
+        <!-- Apresentacao visual com brasao 3D -->
         <div class="canvas-container">
             <div class="visual-content">
                 <div class="brand-badge">
@@ -29,12 +29,11 @@
 
             <div class="stage-wrapper" id="stage-wrapper">
                 <canvas id="puc-3d-canvas"></canvas>
-                <!-- Fallback PNG com transição suave (crossfade) via CSS -->
                 <img th:src="@{/images/brasao_puc.png}" class="fallback-img" alt="PUC Minas">
             </div>
         </div>
 
-        <!-- Lado Direito: Formulário em Dark Glassmorphism -->
+        <!-- Formulario de Login -->
         <div class="form-container">
             <div class="glass-card" data-tilt data-tilt-max="3" data-tilt-glare="true" data-tilt-max-glare="0.18">
                 <div class="stagger-item">
@@ -68,7 +67,7 @@
                     <span th:text="${infoMessage}"></span>
                 </div>
 
-                <!-- Formulário Spring Security (CSRF nativo) -->
+                <!-- Formulario -->
                 <form th:action="@{/login}" method="post">
                     <div class="form-group stagger-item">
                         <label for="username">Usuário ou E-mail</label>
@@ -120,7 +119,7 @@
         </div>
     </div>
 
-    <!-- Bibliotecas Locais (Zero Dependência Externa) -->
+    <!-- Scripts e bibliotecas -->
     <script th:src="@{/js/vendor/three.min.js}"></script>
     <script th:src="@{/js/vendor/GLTFLoader.js}"></script>
     <script th:src="@{/js/vendor/gsap.min.js}"></script>

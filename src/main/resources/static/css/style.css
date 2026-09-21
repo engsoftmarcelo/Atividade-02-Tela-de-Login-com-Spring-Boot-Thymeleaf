@@ -187,7 +187,7 @@ body {
   z-index: 10;
 }
 
-/* Card de Glassmorphism Perfeito (Awwwards Style) */
+/* Card com efeito glassmorphism */
 .glass-card {
   background: var(--glass-bg);
   backdrop-filter: blur(16px) saturate(120%);
@@ -420,7 +420,7 @@ body {
   color: var(--text-secondary);
 }
 
-/* Medidor Dinâmico de Força de Senha Neon */
+/* Barra indicadora de forca da senha */
 .password-meter-track {
   width: 100%;
   height: 4px;
@@ -615,8 +615,7 @@ body {
   transform: translateY(-2px);
 }
 
-/* ========================================= */
-/* Responsividade Mobile (< 900px) Watermark 3D */
+/* Responsividade (mobile e telas menores) */
 /* ========================================= */
 @media (max-width: 900px) {
   .split-layout {

@@ -1,142 +1,190 @@
-# 🔐 Atividade 02 - Sistema de Autenticação com Spring Boot, Thymeleaf e Three.js 3D
+# Atividade 02 - Sistema de Autenticação com Spring Boot e Thymeleaf
 
 <div align="center">
-  <img src="src/main/resources/static/images/brasao_puc.svg" alt="Brasão PUC Minas" width="120" />
-  <h2>Pontifícia Universidade Católica de Minas Gerais</h2>
-  <p><strong>Desenvolvimento e Integração de Aplicações Web</strong></p>
-  <p>Atividade Prática em Dupla (Pair Programming) • Valor: 2,5 pts</p>
+  <img src="src/main/resources/static/images/brasao_puc.svg" alt="Brasão PUC Minas" width="110" />
+  <h3>Pontifícia Universidade Católica de Minas Gerais</h3>
+  <p><strong>Instituto de Ciências Exatas e Informática (ICEI) — Engenharia de Software</strong></p>
+  <p>Disciplina: Desenvolvimento e Integração de Aplicações Web</p>
+  <p>Atividade Prática em Dupla (Pair Programming) • Valor: 2,5 pontos</p>
 </div>
 
 ---
 
-## 🌟 Destaques e Inovações do Projeto
+## 👥 Integrantes da Dupla
 
-- 🛡️ **Segurança Robusta**: Autenticação completa gerenciada pelo **Spring Security** com senhas criptografadas através de **BCrypt**.
-- 🎨 **Interface High-Tech com Efeito UAU**:
-  - **Three.js (WebGL 3D)**: Brasão oficial da PUC Minas renderizado em 3D interativo em tempo real via WebGL, com iluminação dinâmica que acompanha o movimento do mouse, reflexos metálicos (PBR) e rotação 360° com arrasto.
-  - **Tilt.js (Vanilla-Tilt)**: Efeito de inclinação 3D com reflexo de vidro (*glare*) nos cards ao passar o cursor.
-  - **GSAP (GreenSock)**: Animações fluidas de entrada e levitação suave.
-  - **Zero Dependência Externa de CDN**: Todas as bibliotecas de animação e 3D (`three.min.js`, `GLTFLoader.js`, `gsap.min.js`, `vanilla-tilt.min.js`) estão embarcadas localmente no projeto (`/static/js/vendor/`), funcionando 100% offline.
-- 👤 **Cadastro Completo com Validações**:
-  - Validação de campos obrigatórios via **Jakarta Bean Validation**.
-  - Verificação de senhas coincidentes.
-  - Bloqueio de e-mails ou nomes de usuário duplicados.
-  - Medidor dinâmico de força da senha em tempo real.
-- 📧 **Recuperação de Senha**: Simulação e envio de token de segurança com registro estruturado em log e suporte a SMTP real via `application.properties`.
-- ⚡ **Área Logada Segura (`/home`)**: Dashboard com dados do usuário autenticado, estatísticas de segurança e encerramento seguro de sessão (Logout).
+- **Marcelo Gomes de Oliveira Junior**
+- **Victor Cândido Leite**
+
+---
+
+## 📌 Visão Geral do Projeto
+
+Este projeto consiste em uma aplicação web desenvolvida com **Spring Boot** e **Thymeleaf**, implementando um fluxo completo de **autenticação, cadastro de novos usuários e recuperação de senha**.
+
+A interface visual foi concebida com identidade institucional própria, utilizando a paleta de cores da PUC Minas (azul marinho profundo e detalhes em âmbar/dourado), complementada pela renderização interativa em 3D do brasão institucional em WebGL (Three.js), com suporte a fallback automático para imagens convencionais caso o navegador do usuário não disponha de aceleração gráfica.
+
+---
+
+## 🛠️ Tecnologias Utilizadas
+
+- **Java 17 / 21 / 25**: Linguagem base da aplicação.
+- **Spring Boot 4 / Spring Framework**: Framework principal para inversão de controle e injeção de dependências.
+- **Spring Security**: Mecanismo de autenticação, controle de sessões e autorização de endpoints.
+- **BCrypt**: Algoritmo de hash criptográfico unidirecional com salt dinâmico para armazenamento seguro de senhas.
+- **Jakarta Bean Validation**: Validação declarativa de integridade de dados nos formulários.
+- **Thymeleaf**: Engine de renderização de templates HTML integrada ao Spring MVC.
+- **Spring Mail**: Módulo para integração e despacho de mensagens via protocolo SMTP.
+- **HTML5 / CSS3 / JavaScript**: Interface com design responsivo, estilização glassmorphism e Three.js para o elemento visual institucional.
 
 ---
 
 ## 🌐 Endpoints da Aplicação
 
-| Método | Endpoint | Descrição | Acesso |
+| Método | Endpoint | Descrição | Nível de Acesso |
 | :--- | :--- | :--- | :--- |
-| `GET` | `/login` | Exibe a tela de login interativa com Brasão 3D | Público |
-| `POST` | `/login` | Processamento de autenticação via Spring Security | Público |
-| `GET` | `/register` | Exibe a tela de cadastro de novos usuários | Público |
-| `POST` | `/register` | Processa e valida os dados de cadastro | Público |
-| `GET` | `/recoverpassword` | Exibe a tela para recuperação de senha | Público |
-| `POST` | `/recoverpassword` | Processa o envio de código/token de recuperação | Público |
-| `GET` | `/home` | Dashboard restrito do usuário autenticado | Protegido (`ROLE_USER`) |
-| `POST` | `/logout` | Encerra a sessão e limpa cookies e contexto | Protegido |
-| `GET` | `/` | Redireciona automaticamente para `/home` | Protegido |
-| `GET` | `/models/brasao_puc.glb` | Modelo 3D glTF binário do Brasão PUC Minas | Público |
+| `GET` | `/login` | Renderiza a página de autenticação | Público |
+| `POST` | `/login` | Processa as credenciais informadas (gerenciado pelo Spring Security) | Público |
+| `GET` | `/register` | Renderiza o formulário de cadastro de usuário | Público |
+| `POST` | `/register` | Valida os dados submetidos e cria o novo usuário | Público |
+| `GET` | `/recoverpassword` | Renderiza a tela de solicitação de recuperação de senha | Público |
+| `POST` | `/recoverpassword` | Processa a solicitação e dispara o token de recuperação | Público |
+| `GET` | `/home` | Painel restrito com os dados do usuário autenticado | Autenticado (`ROLE_USER`) |
+| `POST` | `/logout` | Encerra a sessão atual e invalida os cookies de autenticação | Autenticado |
+| `GET` | `/` | Redireciona o fluxo para a área principal (`/home`) | Autenticado |
 
 ---
 
-## 🔑 Contas Pré-Cadastradas para Testes
+## 📋 Regras de Negócio e Validações
 
-Para agilizar a avaliação pelo professor, a aplicação já inicializa automaticamente com duas contas de teste prontas para uso:
+### 1. Autenticação (`/login`)
+- Permite autenticação tanto pelo **nome de usuário** quanto pelo **endereço de e-mail institucional**.
+- Validação de senha através de conferência de hash BCrypt.
+- Exibição de alertas dinâmicos para credenciais incorretas (`?error=true`), encerramento de sessão (`?logout=true`), cadastro recém-concluído (`?registered=true`) e solicitação de recuperação de senha (`?recovered=true`).
 
-| Perfil | Usuário / E-mail | Senha |
-| :--- | :--- | :--- |
-| **Administrador** | `admin` ou `admin@pucminas.br` | `puc123` |
-| **Aluno** | `aluno` ou `aluno@sga.pucminas.br` | `puc123` |
+### 2. Cadastro de Usuários (`/register`)
+- **Campos obrigatórios**: Validação via Jakarta Bean Validation contra valores nulos ou em branco (`@NotBlank`).
+- **Formato de e-mail**: Validação de conformidade estrutural de e-mail (`@Email`).
+- **Unicidade de dados**: Bloqueio de cadastros com nome de usuário ou e-mail já registrados no repositório.
+- **Conferência de senhas**: Validação que impede o envio de confirmação divergente da senha principal.
+- **Política de tamanho**: Exigência de senha com tamanho mínimo de 6 caracteres.
+- **Indicador de complexidade**: Script de apoio em tempo real para orientação do usuário quanto à força da senha digitada.
 
-> 💡 *Você também pode cadastrar qualquer novo usuário pela tela `/register` e autenticar-se imediatamente!*
+### 3. Recuperação de Senha (`/recoverpassword`)
+- Busca de usuário pelo e-mail cadastrado.
+- Geração de token alfanumérico seguro para redefinição.
+- **Envio de e-mail flexível**:
+  - Quando configuradas as credenciais SMTP no ambiente (`SPRING_MAIL_USERNAME` e `SPRING_MAIL_PASSWORD`), o sistema realiza o envio real da mensagem com o código.
+  - Em ambiente de desenvolvimento/avaliação sem credenciais externas, o token é registrado diretamente nos logs da aplicação com formato padronizado, permitindo testes rápidos sem dependência de chaves de terceiros.
+
+### 4. Área Protegida (`/home`)
+- Acesso condicionado à presença de sessão ativa autenticada no Spring Security.
+- Exibição do nome completo, username, e-mail e confirmação do método de proteção da conta (BCrypt).
+- Botão de logout com submissão via método `POST` e proteção contra falsificação de requisições cross-site (CSRF).
+
+---
+
+## 🔑 Credenciais Pré-Cadastradas para Testes
+
+Para facilitar a validação e avaliação da atividade, a aplicação inicializa automaticamente com duas contas de demonstração:
+
+| Perfil | Usuário | E-mail | Senha |
+| :--- | :--- | :--- | :--- |
+| **Administrador** | `admin` | `admin@pucminas.br` | `puc123` |
+| **Aluno** | `aluno` | `aluno@sga.pucminas.br` | `puc123` |
+
+> *Nota: É possível registrar novos usuários diretamente pela interface `/register` e utilizá-los imediatamente no login.*
 
 ---
 
 ## 🚀 Como Executar a Aplicação
 
 ### Pré-requisitos
-- **Java 17, 21 ou 25** instalado no sistema.
-- Navegador moderno com suporte a WebGL (Google Chrome, Microsoft Edge, Firefox, Safari ou Opera).
+- **Java JDK (versão 17, 21 ou superior)** instalado e configurado no PATH.
+- Conexão de rede ativa na primeira execução para resolução inicial de dependências do Maven.
 
-### Passo 1: Clonar o Repositório
+### Passo 1: Obter o Código-Fonte
+Clone o repositório ou descompacte o arquivo do projeto no diretório desejado:
 ```bash
 git clone <URL_DO_REPOSITORIO>
 cd atividade2_login
 ```
 
-### Passo 2: Executar com o Maven Wrapper
-No Windows (PowerShell / Prompt de Comando):
+### Passo 2: Executar o Projeto com o Maven Wrapper
+No **Windows (PowerShell ou Prompt de Comando)**:
 ```powershell
 .\mvnw.cmd spring-boot:run
 ```
 
-No Linux / macOS:
+No **Linux ou macOS**:
 ```bash
 ./mvnw spring-boot:run
 ```
 
-### Passo 3: Acessar no Navegador
-Abra o navegador e acesse:
+### Passo 3: Acessar a Interface
+Após a mensagem de inicialização do Spring Boot no terminal (`Started Atividade2LoginApplication`), abra o navegador de sua preferência no endereço:
 ```text
 http://localhost:8080/login
 ```
 
 ---
 
-## 🏗️ Estrutura Arquitetural do Projeto
+## ⚙️ Configurações e Variáveis de Ambiente
+
+Conforme boas práticas de segurança, nenhuma senha ou credencial sensível foi armazenada de forma estática no código-fonte. O arquivo `src/main/resources/application.properties` está preparado para receber credenciais via variáveis de ambiente:
+
+| Variável de Ambiente | Descrição | Valor Padrão |
+| :--- | :--- | :--- |
+| `SPRING_MAIL_HOST` | Host do servidor SMTP | `smtp.gmail.com` |
+| `SPRING_MAIL_PORT` | Porta de conexão SMTP (STARTTLS) | `587` |
+| `SPRING_MAIL_USERNAME` | Usuário/E-mail para autenticação SMTP | *(vazio - modo log de dev)* |
+| `SPRING_MAIL_PASSWORD` | Senha de aplicativo do provedor SMTP | *(vazio)* |
+
+Caso as variáveis de e-mail não sejam declaradas, a aplicação executa normalmente em modo de desenvolvimento, exibindo o código de recuperação no terminal da aplicação para fins de conferência da banca avaliadora.
+
+---
+
+## 📂 Estrutura de Pacotes e Diretórios
+
+A estrutura do projeto segue a arquitetura padrão em camadas recomendada para aplicações Spring Boot:
 
 ```text
 src/
 └── main/
     ├── java/com/example/atividade2_login/
     │   ├── config/
-    │   │   ├── SecurityConfig.java     # Configuração do Spring Security 7 & BCrypt
-    │   │   └── WebConfig.java          # Mapeamento de recursos estáticos 3D
+    │   │   ├── SecurityConfig.java         # Configurações de rotas, filtros e BCrypt
+    │   │   └── WebConfig.java              # Mapeamento de recursos estáticos
     │   ├── controller/
-    │   │   └── AuthController.java     # Controle de rotas (/login, /register, etc.)
+    │   │   └── AuthController.java         # Endpoints de autenticação, registro e recuperação
     │   ├── dto/
-    │   │   └── RegisterDTO.java        # Objeto de transferência e validações
+    │   │   └── RegisterDTO.java            # DTO com regras de validação Jakarta
     │   ├── model/
-    │   │   └── User.java               # Entidade de usuário
+    │   │   └── User.java                   # Entidade representativa de Usuário
     │   ├── repository/
-    │   │   └── UserRepository.java     # Persistência em memória thread-safe
+    │   │   └── UserRepository.java         # Camada de persistência em memória thread-safe
     │   ├── service/
-    │   │   ├── EmailService.java       # Serviço de envio e token de recuperação
-    │   │   ├── UserDetailsServiceImpl.java # Integração com Spring Security
-    │   │   └── UserService.java        # Regras de negócio e hash BCrypt
-    │   └── Atividade2LoginApplication.java
+    │   │   ├── EmailService.java           # Lógica de despacho e token de recuperação
+    │   │   ├── UserDetailsServiceImpl.java # Integração com UserDetailsService do Spring
+    │   │   └── UserService.java            # Regras de negócio e hashing de senhas
+    │   └── Atividade2LoginApplication.java # Classe principal de inicialização
     │
     └── resources/
         ├── static/
         │   ├── css/
-        │   │   └── style.css           # Estilização Glassmorphism & Paleta PUC
+        │   │   └── style.css               # Folha de estilos institucional
         │   ├── js/
-        │   │   ├── vendor/             # Three.js, GSAP, Tilt.js embarcados
-        │   │   ├── puc3d.js            # Cena WebGL 3D, iluminação e controles
-        │   │   └── app.js              # Interações de UI, tilt e validações
-        │   ├── images/
-        │   │   ├── brasao_puc.png      # Textura e brasão oficial em alta resolução
-        │   │   └── brasao_puc.svg      # Vetor oficial da PUC Minas
-        │   └── models/
-        │       └── brasao_puc.glb      # Modelo 3D binário oficial otimizado
+        │   │   ├── puc3d.js                # Renderização WebGL 3D do brasão institucional
+        │   │   ├── app.js                  # Interações de formulário e validações visuais
+        │   │   └── vendor/                 # Bibliotecas de suporte empacotadas localmente
+        │   ├── images/                     # Logotipos e brasão institucional em PNG/SVG
+        │   └── models/                     # Modelo 3D oficial do brasão PUC Minas (.glb)
         │
-        └── templates/
-            ├── login.html              # Tela de Login com 3D Three.js & Tilt
-            ├── register.html           # Tela de Cadastro com medidor de força
-            ├── recoverpassword.html    # Tela de Recuperação de Senha
-            └── home.html               # Painel Restrito do Aluno
+        ├── templates/
+        │   ├── login.html                  # Interface da tela de login
+        │   ├── register.html               # Interface do formulário de cadastro
+        │   ├── recoverpassword.html        # Interface de recuperação de senha
+        │   └── home.html                   # Dashboard da área autenticada
+        │
+        └── application.properties          # Propriedades de configuração do sistema
 ```
 
----
-
-## 👥 Integrantes da Dupla (Pair Programming)
-
-- **Marcelo Gomes de Oliveira Junior**
-- **Victor Cândido Leite**
-
-*Pontifícia Universidade Católica de Minas Gerais — ICEI*

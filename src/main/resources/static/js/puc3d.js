@@ -1,7 +1,6 @@
 /**
- * PUC Minas - Visualizador 3D High-Tech com Three.js
- * Iluminação de estúdio (Key Âmbar, Rim Ciano, Ambient Navy) e rotação inercial com Lerp
- * Padrão Awwwards / Creative Development
+ * PUC Minas - Visualizador 3D com Three.js
+ * Renderizacao WebGL do brasao institucional, iluminacao de cena e controles de interacao
  */
 (function () {
   function initPUC3D() {
@@ -169,7 +168,7 @@
       const elapsedTime = clock.getElapsedTime();
 
       if (model) {
-        // Levitação orgânica senoidal (Perplexity spec)
+        // Animacao suave de flutuacao senoidal
         model.position.y = Math.sin(elapsedTime * 1.5) * 0.1;
 
         if (!isDragging) {

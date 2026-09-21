@@ -1,10 +1,8 @@
 /**
- * PUC Minas - Orquestração de Animações & Microinterações
- * GSAP Stagger Reveal, VanillaTilt e Medidor Neon de Senha
- * Padrão Awwwards / Creative Development
+ * PUC Minas - Scripts de Interatividade e Validacoes de Interface
  */
 document.addEventListener("DOMContentLoaded", () => {
-  // 1. GSAP Stagger Reveal nos elementos .stagger-item
+  // Animacao de entrada dos elementos do formulario
   if (typeof gsap !== "undefined") {
     gsap.from(".stagger-item", {
       y: 25,
@@ -23,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 2. VanillaTilt nos cards com reflexo de vidro suave (glare)
+  // Efeito tilt nos cards
   if (window.VanillaTilt) {
     VanillaTilt.init(document.querySelectorAll("[data-tilt]"), {
       max: 3,
@@ -34,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 3. Alternador de Visibilidade de Senha (Toggle Password)
+  // Alternador de visibilidade da senha (mostrar/ocultar)
   const toggleBtns = document.querySelectorAll(".toggle-password");
   toggleBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -58,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // 4. Medidor de Força de Senha Neon com Regex Dinâmico
+  // Indicador de forca da senha
   const passInput = document.getElementById("password") || document.getElementById("reg-password");
   const meterFill = document.getElementById("pass-meter-fill");
   const meterLabel = document.getElementById("pass-meter-label");

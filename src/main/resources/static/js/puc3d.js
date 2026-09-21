@@ -59,11 +59,32 @@
     cursorLight.position.set(0, 0, 3);
     scene.add(cursorLight);
 
+    // 5. Particulas orbitais leves nativas Three.js (atmosfera digital sutil)
+    const particleCount = 50;
+    const particleGeo = new THREE.BufferGeometry();
+    const particlePositions = new Float32Array(particleCount * 3);
+    for (let i = 0; i < particleCount * 3; i += 3) {
+      particlePositions[i] = (Math.random() - 0.5) * 7;
+      particlePositions[i + 1] = (Math.random() - 0.5) * 5;
+      particlePositions[i + 2] = (Math.random() - 0.5) * 4;
+    }
+    particleGeo.setAttribute("position", new THREE.BufferAttribute(particlePositions, 3));
+    const particleMat = new THREE.PointsMaterial({
+      color: 0x38bdf8,
+      size: 0.045,
+      transparent: true,
+      opacity: 0.45,
+      blending: THREE.AdditiveBlending
+    });
+    const particles = new THREE.Points(particleGeo, particleMat);
+    scene.add(particles);
+
     let model;
     let mouseX = 0;
     let mouseY = 0;
     let targetX = 0;
     let targetY = 0;
+    let autoSpinY = 0;
     let isDragging = false;
     let dragStartX = 0;
     let dragStartY = 0;
@@ -138,6 +159,29 @@
       cursorLight.position.y = mouseY * 2.5;
     });
 
+    // Ajuste sutil na iluminacao ao focar nos campos do formulario
+    const formInputs = document.querySelectorAll("input");
+    formInputs.forEach((input) => {
+      input.addEventListener("focus", () => {
+        if (window.gsap) {
+          gsap.to(mainLight, { intensity: 2.6, duration: 0.35 });
+          gsap.to(cursorLight, { intensity: 1.6, duration: 0.35 });
+        } else {
+          mainLight.intensity = 2.6;
+          cursorLight.intensity = 1.6;
+        }
+      });
+      input.addEventListener("blur", () => {
+        if (window.gsap) {
+          gsap.to(mainLight, { intensity: 2.0, duration: 0.35 });
+          gsap.to(cursorLight, { intensity: 1.2, duration: 0.35 });
+        } else {
+          mainLight.intensity = 2.0;
+          cursorLight.intensity = 1.2;
+        }
+      });
+    });
+
     // Suporte a arrasto (drag) com mouse/touch
     stageWrapper.addEventListener("pointerdown", (e) => {
       isDragging = true;
@@ -161,20 +205,24 @@
       }
     });
 
-    // Render Loop com levitação e rotação inercial via Lerp
+    // Render Loop com levitação, rotação contínua suave e partículas
     const clock = new THREE.Clock();
     function animate() {
       requestAnimationFrame(animate);
       const elapsedTime = clock.getElapsedTime();
+
+      // Animacao lenta das particulas de fundo
+      particles.rotation.y = elapsedTime * 0.03;
 
       if (model) {
         // Animacao suave de flutuacao senoidal
         model.position.y = Math.sin(elapsedTime * 1.5) * 0.1;
 
         if (!isDragging) {
-          // Rotação suave baseada no ponteiro com Lerp (0.05)
-          targetX = mouseX * 0.35 + dragRotY;
-          targetY = mouseY * 0.25 + dragRotX;
+          // Rotacao planetaria continua combinada com parallax do mouse
+          autoSpinY += 0.003;
+          targetX = autoSpinY + mouseX * 0.3 + dragRotY;
+          targetY = mouseY * 0.2 + dragRotX;
           model.rotation.y += (targetX - model.rotation.y) * 0.05;
           model.rotation.x += (targetY - model.rotation.x) * 0.05;
         } else {

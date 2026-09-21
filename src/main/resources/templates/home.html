@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PUC Minas - Painel do Aluno</title>
+    <title>Painel do Aluno | PUC Minas</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -17,8 +17,8 @@
     <div class="bg-glow-1"></div>
     <div class="bg-glow-2"></div>
 
-    <div class="home-shell">
-        <!-- Barra Superior -->
+    <div class="home-layout">
+        <!-- Barra Superior de Navegação -->
         <header class="home-nav">
             <div class="nav-brand">
                 <img th:src="@{/images/brasao_puc.svg}" alt="PUC Minas Logo">
@@ -42,16 +42,16 @@
         </header>
 
         <!-- Conteúdo Principal Centrado -->
-        <main class="home-main">
-            <div class="home-card">
+        <main class="home-content">
+            <div class="home-glass-card" data-tilt data-tilt-max="3" data-tilt-glare="true" data-tilt-max-glare="0.15">
                 <div class="home-avatar"
                      th:text="${currentUser != null and !currentUser.name.isEmpty() ? #strings.substring(currentUser.name, 0, 1) : 'U'}">U</div>
                 <h1 class="home-title" th:text="'Bem-vindo(a), ' + ${currentUser != null ? currentUser.name : 'Aluno'} + '!'">Bem-vindo, Aluno!</h1>
-                <p class="home-subtitle">Área Restrita • Pontifícia Universidade Católica de Minas Gerais</p>
+                <p class="home-subtitle">Área Restrita do Aluno • Pontifícia Universidade Católica de Minas Gerais</p>
 
                 <!-- Grid de Dados do Perfil -->
                 <div class="profile-grid">
-                    <div class="profile-item">
+                    <div class="profile-item stagger-item">
                         <svg class="profile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                             <circle cx="12" cy="7" r="4"></circle>
@@ -62,7 +62,7 @@
                         </div>
                     </div>
 
-                    <div class="profile-item">
+                    <div class="profile-item stagger-item">
                         <svg class="profile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
                             <circle cx="8.5" cy="7" r="4"></circle>
@@ -74,7 +74,7 @@
                         </div>
                     </div>
 
-                    <div class="profile-item">
+                    <div class="profile-item stagger-item">
                         <svg class="profile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                             <polyline points="22,6 12,13 2,6"></polyline>
@@ -85,7 +85,7 @@
                         </div>
                     </div>
 
-                    <div class="profile-item">
+                    <div class="profile-item stagger-item">
                         <svg class="profile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
                         </svg>
@@ -97,7 +97,7 @@
                 </div>
 
                 <!-- Botão de Logout Principal -->
-                <form th:action="@{/logout}" method="post">
+                <form th:action="@{/logout}" method="post" class="stagger-item">
                     <button type="submit" class="btn-logout">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>

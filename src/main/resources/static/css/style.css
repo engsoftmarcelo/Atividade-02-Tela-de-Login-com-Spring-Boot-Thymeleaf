@@ -1,26 +1,19 @@
 :root {
+  --bg-dark: #00111c;
   --puc-navy: #002b49;
-  --puc-navy-dark: #070e1c;
   --puc-cyan: #38bdf8;
-  --puc-cyan-glow: rgba(56, 189, 248, 0.45);
-  --puc-gold: #fbbf24;
-  --puc-gold-glow: rgba(251, 191, 36, 0.35);
-  --text-primary: #f9fafb;
+  --puc-amber: #fbbf24;
+  --glass-bg: rgba(0, 43, 73, 0.18);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --text-primary: #ffffff;
   --text-secondary: #94a3b8;
   --text-muted: #64748b;
-  --input-bg: rgba(15, 23, 42, 0.75);
-  --input-border: rgba(148, 163, 184, 0.28);
-  --card-bg: rgba(10, 20, 35, 0.75);
-  --card-border: rgba(255, 255, 255, 0.09);
   --danger: #ef4444;
   --danger-bg: rgba(239, 68, 68, 0.15);
   --danger-border: rgba(239, 68, 68, 0.35);
   --success: #22c55e;
   --success-bg: rgba(34, 197, 94, 0.15);
   --success-border: rgba(34, 197, 94, 0.35);
-  --info: #38bdf8;
-  --info-bg: rgba(56, 189, 248, 0.15);
-  --info-border: rgba(56, 189, 248, 0.35);
 }
 
 *,
@@ -33,10 +26,9 @@
 }
 
 body {
-  min-height: 100vh;
+  background-color: var(--bg-dark);
   color: var(--text-primary);
-  background: radial-gradient(circle at 15% 15%, #0f1f3d 0%, #060d1d 45%, #020610 100%);
-  background-attachment: fixed;
+  min-height: 100vh;
   overflow-x: hidden;
   position: relative;
 }
@@ -48,12 +40,11 @@ body {
   left: -150px;
   width: 550px;
   height: 550px;
-  background: radial-gradient(circle, rgba(56, 189, 248, 0.18) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.14) 0%, transparent 70%);
   border-radius: 50%;
   pointer-events: none;
   z-index: 0;
-  filter: blur(50px);
-  animation: pulseGlow 9s ease-in-out infinite alternate;
+  filter: blur(55px);
 }
 
 .bg-glow-2 {
@@ -62,64 +53,56 @@ body {
   right: -100px;
   width: 600px;
   height: 600px;
-  background: radial-gradient(circle, rgba(251, 191, 36, 0.14) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(251, 191, 36, 0.12) 0%, transparent 70%);
   border-radius: 50%;
   pointer-events: none;
   z-index: 0;
   filter: blur(65px);
-  animation: pulseGlow 11s ease-in-out infinite alternate-reverse;
-}
-
-@keyframes pulseGlow {
-  0% { transform: scale(1) translate(0, 0); }
-  100% { transform: scale(1.15) translate(30px, 30px); }
 }
 
 /* ========================================= */
-/* Shell de Autenticação (Login, Register, Recover) */
+/* Split Layout (Desktop 50/50) */
 /* ========================================= */
-.auth-shell {
-  min-height: 100vh;
+.split-layout {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2.5rem clamp(1rem, 4vw, 3rem);
-  gap: 3.5rem;
+  min-height: 100vh;
+  width: 100vw;
   position: relative;
   z-index: 1;
 }
 
-/* Vitrine 3D do Brasão */
-.auth-visual {
-  flex: 1.1;
+/* Lado Esquerdo: Canvas 3D e Vitrine */
+.canvas-container {
+  flex: 1.2;
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  max-width: 580px;
+  padding: 2.5rem;
+  overflow: hidden;
 }
 
-.auth-visual::before {
+.canvas-container::before {
   content: "";
   position: absolute;
-  inset: 5%;
-  border-radius: 36px;
+  inset: 15%;
+  border-radius: 40px;
   background:
-    radial-gradient(circle at 25% 15%, rgba(56, 189, 248, 0.28), transparent 60%),
-    radial-gradient(circle at 75% 85%, rgba(251, 191, 36, 0.22), transparent 60%);
-  filter: blur(28px);
-  opacity: 0.85;
+    radial-gradient(circle at 30% 20%, rgba(56, 189, 248, 0.22), transparent 60%),
+    radial-gradient(circle at 70% 80%, rgba(251, 191, 36, 0.18), transparent 60%);
+  filter: blur(35px);
+  opacity: 0.8;
   pointer-events: none;
 }
 
-.auth-brand-badge {
+.brand-badge {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   background: rgba(251, 191, 36, 0.12);
   border: 1px solid rgba(251, 191, 36, 0.3);
-  color: var(--puc-gold);
+  color: var(--puc-amber);
   padding: 6px 16px;
   border-radius: 9999px;
   font-size: 0.82rem;
@@ -130,8 +113,8 @@ body {
   z-index: 2;
 }
 
-.auth-visual-title {
-  font-size: 2rem;
+.visual-title {
+  font-size: 2.1rem;
   font-weight: 800;
   background: linear-gradient(135deg, #ffffff 40%, #93c5fd 100%);
   -webkit-background-clip: text;
@@ -141,7 +124,7 @@ body {
   z-index: 2;
 }
 
-.auth-visual-subtitle {
+.visual-subtitle {
   color: var(--text-secondary);
   font-size: 0.95rem;
   text-align: center;
@@ -149,83 +132,87 @@ body {
   z-index: 2;
 }
 
-/* Canvas 3D e Imagem Fallback */
-.canvas-container {
-  width: 100%;
-  height: 380px;
+.stage-wrapper {
   position: relative;
+  width: 100%;
+  max-width: 520px;
+  height: 380px;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 2;
 }
 
-.canvas-container canvas {
+.stage-wrapper canvas {
   width: 100%;
   height: 100%;
-  outline: none;
   cursor: grab;
+  outline: none;
+  opacity: 0;
+  transition: opacity 0.8s ease;
 }
 
-.canvas-container canvas:active {
+.stage-wrapper canvas:active {
   cursor: grabbing;
 }
 
-.canvas-fallback-img {
-  display: none;
-  max-width: 240px;
-  width: 100%;
-  height: auto;
-  filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.6));
-  z-index: 2;
+.stage-wrapper canvas.ready {
+  opacity: 1;
 }
 
-/* Container do Formulário */
-.auth-main {
-  flex: 0.95;
+.fallback-img {
+  position: absolute;
+  width: 60%;
+  max-width: 320px;
+  height: auto;
+  transition: opacity 0.8s ease;
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.7));
+  pointer-events: none;
+}
+
+/* Oculta o fallback quando o WebGL 3D estiver pronto */
+.stage-wrapper canvas.ready + .fallback-img {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Lado Direito: Formulário */
+.form-container {
+  flex: 0.8;
   display: flex;
   align-items: center;
   justify-content: center;
-  max-width: 460px;
-  width: 100%;
-  z-index: 2;
+  padding: 2.5rem;
+  position: relative;
+  z-index: 10;
 }
 
-/* Card Principal em Glassmorphism */
-.auth-card {
+/* Card de Glassmorphism Perfeito (Awwwards Style) */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px) saturate(120%);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: 22px;
+  padding: 2.8rem 2.4rem;
   width: 100%;
-  padding: 2.6rem 2.4rem;
-  border-radius: 26px;
-  background: var(--card-bg);
-  backdrop-filter: blur(20px) saturate(160%);
-  -webkit-backdrop-filter: blur(20px) saturate(160%);
-  border: 1px solid var(--card-border);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.65), 0 0 40px rgba(2, 132, 199, 0.12);
+  max-width: 440px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.1);
   position: relative;
 }
 
-@supports not (backdrop-filter: blur(1px)) {
-  .auth-card {
-    background: rgba(8, 16, 30, 0.94);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-  }
-}
-
-.auth-header {
-  margin-bottom: 1.8rem;
-}
-
-.auth-title {
-  font-size: 1.75rem;
+.glass-card h2 {
+  font-size: 1.8rem;
   font-weight: 800;
   color: var(--text-primary);
   letter-spacing: -0.01em;
   margin-bottom: 0.35rem;
 }
 
-.auth-subtitle {
-  font-size: 0.92rem;
+.glass-card p.subtitle {
   color: var(--text-secondary);
+  font-size: 0.92rem;
+  margin-bottom: 1.8rem;
   line-height: 1.5;
 }
 
@@ -260,8 +247,8 @@ body {
 }
 
 .alert-info {
-  background: var(--info-bg);
-  border: 1px solid var(--info-border);
+  background: rgba(56, 189, 248, 0.15);
+  border: 1px solid rgba(56, 189, 248, 0.35);
   color: #bae6fd;
 }
 
@@ -272,24 +259,17 @@ body {
   margin-top: 2px;
 }
 
-/* Formulário e Grupos de Inputs */
-.form-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 1.15rem;
-  margin-bottom: 1.6rem;
+/* Inputs Modernos */
+.form-group {
+  margin-bottom: 1.2rem;
 }
 
-.input-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-}
-
-.input-label {
-  font-size: 0.85rem;
+.form-group label {
+  display: block;
+  font-size: 0.84rem;
   font-weight: 600;
   color: var(--text-primary);
+  margin-bottom: 0.35rem;
 }
 
 .input-container {
@@ -308,29 +288,26 @@ body {
   transition: color 0.2s ease;
 }
 
-.input-control {
+.form-group input {
   width: 100%;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
   padding: 12px 14px 12px 42px;
+  border-radius: 10px;
   font-size: 0.95rem;
-  border-radius: 12px;
-  border: 1px solid var(--input-border);
-  background: var(--input-bg);
-  color: var(--text-primary);
+  transition: all 0.25s ease;
   outline: none;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
-.input-control::placeholder {
-  color: #64748b;
-}
-
-.input-control:focus {
+.form-group input:focus {
+  outline: none;
   border-color: var(--puc-cyan);
-  background: rgba(10, 18, 36, 0.95);
-  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2), 0 10px 25px rgba(2, 6, 23, 0.5);
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.25);
+  background: rgba(255, 255, 255, 0.08);
 }
 
-.input-control:focus + .input-icon,
+.form-group input:focus + .input-icon,
 .input-container:focus-within .input-icon {
   color: var(--puc-cyan);
 }
@@ -353,25 +330,30 @@ body {
   color: var(--text-primary);
 }
 
-/* Erros do Bean Validation */
-.field-error {
+/* Bean Validation Erro State */
+.input-error {
+  border-color: var(--puc-amber) !important;
+}
+
+.error-msg {
+  color: var(--puc-amber);
   font-size: 0.8rem;
-  color: #f87171;
+  margin-top: 4px;
   display: flex;
   align-items: center;
   gap: 4px;
-  margin-top: 2px;
 }
 
-/* Links de Navegação */
-.auth-links {
+/* Links do Formulário */
+.form-links {
   display: flex;
   justify-content: flex-end;
-  font-size: 0.88rem;
   margin-bottom: 1.5rem;
+  font-size: 0.88rem;
 }
 
-.auth-link {
+.form-links a,
+.form-footer a {
   color: var(--puc-cyan);
   text-decoration: none;
   font-weight: 500;
@@ -379,151 +361,95 @@ body {
   transition: color 0.2s ease;
 }
 
-.auth-link::after {
+.form-links a::after,
+.form-footer a::after {
   content: "";
   position: absolute;
   left: 0;
   bottom: -2px;
   width: 0;
   height: 1.5px;
-  background: linear-gradient(90deg, var(--puc-cyan), var(--puc-gold));
+  background: linear-gradient(90deg, var(--puc-cyan), var(--puc-amber));
   transition: width 0.25s ease;
 }
 
-.auth-link:hover {
+.form-links a:hover,
+.form-footer a:hover {
   color: #7dd3fc;
 }
 
-.auth-link:hover::after {
+.form-links a:hover::after,
+.form-footer a:hover::after {
   width: 100%;
 }
 
-/* Botão Principal */
+/* Botão Efeito Neon */
 .btn-primary {
   width: 100%;
-  padding: 13px 20px;
-  border-radius: 12px;
+  padding: 14px;
+  background: var(--puc-cyan);
+  color: var(--bg-dark);
   border: none;
+  border-radius: 10px;
   font-weight: 700;
-  letter-spacing: 0.02em;
   font-size: 0.98rem;
+  letter-spacing: 0.02em;
   cursor: pointer;
-  color: #0b1329;
-  background: linear-gradient(135deg, var(--puc-gold) 0%, #38bdf8 100%);
-  box-shadow: 0 12px 25px -5px rgba(56, 189, 248, 0.35);
+  position: relative;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+  gap: 8px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  filter: brightness(1.06);
-  box-shadow: 0 18px 32px -5px rgba(56, 189, 248, 0.5);
+  box-shadow: 0 10px 25px rgba(56, 189, 248, 0.45);
 }
 
 .btn-primary:active {
   transform: translateY(0);
 }
 
-.auth-footer {
+.form-footer {
   margin-top: 1.8rem;
   text-align: center;
   font-size: 0.9rem;
   color: var(--text-secondary);
 }
 
-.auth-footer a {
-  color: var(--puc-cyan);
-  font-weight: 600;
-  text-decoration: none;
-  margin-left: 4px;
-}
-
-.auth-footer a:hover {
-  text-decoration: underline;
-}
-
-/* ========================================= */
-/* Medidor de Força de Senha (4 Segmentos em Vidro) */
-/* ========================================= */
-.password-strength {
-  margin-top: 0.4rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-}
-
-.password-strength-bar {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0.35rem;
-}
-
-.password-strength-segment {
-  height: 5px;
+/* Medidor Dinâmico de Força de Senha Neon */
+.password-meter-track {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.08);
+  margin-top: 6px;
   overflow: hidden;
-  position: relative;
-  transition: background 0.3s ease;
 }
 
-.password-strength-segment::before {
-  content: "";
-  position: absolute;
-  inset: -40%;
-  filter: blur(5px);
-  opacity: 0;
-  transition: opacity 0.3s ease;
+.password-meter-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: 999px;
+  transition: width 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Classes dinâmicas aplicadas via JS */
-.password-strength--1 .password-strength-segment:nth-child(1) {
-  background: #ef4444;
-}
-.password-strength--1 .password-strength-segment:nth-child(1)::before {
-  background: radial-gradient(circle, rgba(239, 68, 68, 0.9), transparent 60%);
-  opacity: 1;
-}
-
-.password-strength--2 .password-strength-segment:nth-child(-n+2) {
-  background: #f59e0b;
-}
-.password-strength--2 .password-strength-segment:nth-child(2)::before {
-  background: radial-gradient(circle, rgba(245, 158, 11, 0.9), transparent 60%);
-  opacity: 1;
-}
-
-.password-strength--3 .password-strength-segment:nth-child(-n+3) {
-  background: #38bdf8;
-}
-.password-strength--3 .password-strength-segment:nth-child(3)::before {
-  background: radial-gradient(circle, rgba(56, 189, 248, 0.9), transparent 60%);
-  opacity: 1;
-}
-
-.password-strength--4 .password-strength-segment:nth-child(-n+4) {
-  background: #22c55e;
-}
-.password-strength--4 .password-strength-segment:nth-child(4)::before {
-  background: radial-gradient(circle, rgba(34, 197, 94, 0.9), transparent 60%);
-  opacity: 1;
-}
-
-.password-strength-label {
-  font-size: 0.76rem;
+.password-meter-label {
+  font-size: 0.75rem;
   font-weight: 600;
+  margin-top: 4px;
   color: var(--text-muted);
+  display: block;
   transition: color 0.3s ease;
 }
 
 /* ========================================= */
-/* Área Logada (/home) */
+/* Área Logada (/home) Minimalista */
 /* ========================================= */
-.home-shell {
+.home-layout {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -532,10 +458,10 @@ body {
 }
 
 .home-nav {
-  background: rgba(10, 20, 35, 0.85);
+  background: rgba(0, 43, 73, 0.25);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--card-border);
+  border-bottom: 1px solid var(--glass-border);
   padding: 1rem 2rem;
   display: flex;
   align-items: center;
@@ -552,7 +478,7 @@ body {
 }
 
 .nav-brand img {
-  height: 42px;
+  height: 40px;
 }
 
 .nav-brand-title {
@@ -566,7 +492,7 @@ body {
   color: var(--puc-cyan);
 }
 
-.home-main {
+.home-content {
   flex: 1;
   display: flex;
   align-items: center;
@@ -574,41 +500,41 @@ body {
   padding: 3rem 1.5rem;
 }
 
-.home-card {
-  max-width: 540px;
+.home-glass-card {
+  max-width: 520px;
   width: 100%;
   padding: 2.8rem 2.6rem;
-  border-radius: 26px;
-  background: var(--card-bg);
-  backdrop-filter: blur(20px) saturate(160%);
-  -webkit-backdrop-filter: blur(20px) saturate(160%);
-  border: 1px solid var(--card-border);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.65), 0 0 40px rgba(2, 132, 199, 0.12);
+  border-radius: 22px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px) saturate(120%);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.1);
   text-align: center;
 }
 
 .home-avatar {
   width: 68px;
   height: 68px;
-  background: linear-gradient(135deg, var(--puc-gold), var(--puc-cyan));
+  background: linear-gradient(135deg, var(--puc-amber), var(--puc-cyan));
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 800;
   font-size: 1.8rem;
-  color: #0b1329;
+  color: var(--bg-dark);
   margin: 0 auto 1.25rem;
-  box-shadow: 0 10px 25px rgba(56, 189, 248, 0.3);
+  box-shadow: 0 10px 25px rgba(56, 189, 248, 0.35);
 }
 
 .home-title {
-  font-size: 1.8rem;
+  font-size: 1.85rem;
   font-weight: 800;
-  background: linear-gradient(135deg, #ffffff 40%, #93c5fd 100%);
+  background: linear-gradient(135deg, #ffffff 40%, var(--puc-cyan) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.35rem;
 }
 
 .home-subtitle {
@@ -631,7 +557,7 @@ body {
   gap: 10px;
   padding: 0.85rem;
   background: rgba(255, 255, 255, 0.03);
-  border-radius: 14px;
+  border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
@@ -668,71 +594,77 @@ body {
 .btn-logout {
   width: 100%;
   padding: 12px 20px;
-  border-radius: 12px;
-  border: none;
+  border-radius: 10px;
+  border: 1px solid rgba(239, 68, 68, 0.4);
   font-weight: 700;
   font-size: 0.95rem;
   cursor: pointer;
-  color: #fff;
-  background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
-  box-shadow: 0 10px 20px -5px rgba(239, 68, 68, 0.35);
+  color: #fca5a5;
+  background: rgba(239, 68, 68, 0.15);
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .btn-logout:hover {
+  background: rgba(239, 68, 68, 0.25);
+  color: #fff;
+  border-color: rgba(239, 68, 68, 0.6);
   transform: translateY(-2px);
-  box-shadow: 0 14px 28px -5px rgba(239, 68, 68, 0.5);
 }
 
 /* ========================================= */
-/* Responsividade Mobile (< 900px) */
+/* Responsividade Mobile (< 900px) Watermark 3D */
 /* ========================================= */
 @media (max-width: 900px) {
-  .auth-shell {
+  .split-layout {
     flex-direction: column;
-    padding: 2rem 1.25rem;
-    gap: 2rem;
+    position: relative;
   }
 
-  /* No mobile, formulário fica em primeiro plano para melhor UX */
-  .auth-main {
-    order: 1;
-    max-width: 100%;
-  }
-
-  .auth-visual {
-    order: 2;
-    max-width: 100%;
-    min-height: auto;
-  }
-
-  /* Oculta canvas 3D pesado no mobile e mostra imagem estática elegante */
-  .canvas-container canvas {
-    display: none !important;
-  }
-
-  .canvas-fallback-img {
-    display: block;
-  }
-
+  /* O 3D vira uma marca d'água fluida no fundo sem empilhar */
   .canvas-container {
-    height: auto;
-    padding: 1rem 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.25;
+    z-index: 0;
+    pointer-events: none;
+    padding: 1rem;
   }
 
-  .auth-card {
-    padding: 2rem 1.6rem;
+  .canvas-container .brand-badge,
+  .canvas-container .visual-title,
+  .canvas-container .visual-subtitle {
+    display: none;
+  }
+
+  .stage-wrapper {
+    height: 100%;
+    max-width: 100%;
+  }
+
+  /* O formulário fica centralizado em primeiro plano */
+  .form-container {
+    width: 100%;
+    min-height: 100vh;
+    padding: 2rem 1.25rem;
+    z-index: 10;
+  }
+
+  .glass-card {
+    padding: 2.2rem 1.6rem;
   }
 
   .home-nav {
     padding: 0.85rem 1.25rem;
   }
 
-  .home-card {
+  .home-glass-card {
     padding: 2rem 1.5rem;
   }
 

@@ -1,57 +1,40 @@
 /**
- * PUC Minas - Orquestração de Animações e Microinterações
- * GSAP Timeline, VanillaTilt e Medidor de Força de Senha em 4 Segmentos
- * Baseado no guia de Creative Development do Perplexity
+ * PUC Minas - Orquestração de Animações & Microinterações
+ * GSAP Stagger Reveal, VanillaTilt e Medidor Neon de Senha
+ * Padrão Awwwards / Creative Development
  */
 document.addEventListener("DOMContentLoaded", () => {
-  // 1. Linha do Tempo de Entrada Fluida com GSAP
-  if (window.gsap) {
-    const visual = document.querySelector(".auth-visual");
-    const card = document.querySelector(".auth-card, .home-card");
-    const inputs = document.querySelectorAll(".input-group, .profile-item");
-    const primaryBtn = document.querySelector(".btn-primary, .btn-logout");
+  // 1. GSAP Stagger Reveal nos elementos .stagger-item
+  if (typeof gsap !== "undefined") {
+    gsap.from(".stagger-item", {
+      y: 25,
+      opacity: 0,
+      duration: 0.75,
+      stagger: 0.07,
+      ease: "power3.out",
+      delay: 0.1
+    });
 
-    const tl = gsap.timeline({ defaults: { ease: "power3.out", duration: 0.7 } });
-
-    if (visual) {
-      tl.from(visual, { opacity: 0, y: 35 });
-    }
-    if (card) {
-      tl.from(card, { opacity: 0, y: 28 }, visual ? "-=0.35" : 0);
-    }
-    if (inputs.length > 0) {
-      tl.from(inputs, { opacity: 0, y: 16, stagger: 0.05 }, "-=0.25");
-    }
-    if (primaryBtn) {
-      tl.from(primaryBtn, { opacity: 0, y: 14 }, "-=0.15");
-    }
+    gsap.from(".visual-content", {
+      opacity: 0,
+      y: 30,
+      duration: 0.9,
+      ease: "power3.out"
+    });
   }
 
-  // 2. Efeito 3D Glass Tilt com VanillaTilt
+  // 2. VanillaTilt nos cards com reflexo de vidro suave (glare)
   if (window.VanillaTilt) {
-    const card = document.querySelector(".auth-card, .home-card");
-    if (card) {
-      VanillaTilt.init(card, {
-        max: 6,
-        speed: 400,
-        glare: true,
-        "max-glare": 0.12,
-        scale: 1.01
-      });
-    }
-
-    const primaryBtn = document.querySelector(".btn-primary");
-    if (primaryBtn) {
-      VanillaTilt.init(primaryBtn, {
-        max: 5,
-        speed: 300,
-        glare: false,
-        scale: 1.02
-      });
-    }
+    VanillaTilt.init(document.querySelectorAll("[data-tilt]"), {
+      max: 3,
+      speed: 400,
+      glare: true,
+      "max-glare": 0.18,
+      scale: 1.01
+    });
   }
 
-  // 3. Alternância de Visibilidade de Senha (Toggle Password)
+  // 3. Alternador de Visibilidade de Senha (Toggle Password)
   const toggleBtns = document.querySelectorAll(".toggle-password");
   toggleBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -75,65 +58,52 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // 4. Medidor de Força de Senha em 4 Segmentos (Perplexity Spec)
-  const passwordInput = document.getElementById("password") || document.getElementById("reg-password");
-  const strengthContainer = document.querySelector(".password-strength");
+  // 4. Medidor de Força de Senha Neon com Regex Dinâmico
+  const passInput = document.getElementById("password") || document.getElementById("reg-password");
+  const meterFill = document.getElementById("pass-meter-fill");
+  const meterLabel = document.getElementById("pass-meter-label");
 
-  if (passwordInput && strengthContainer) {
-    const label = strengthContainer.querySelector(".password-strength-label");
-
-    function computeStrength(val) {
-      if (!val) return 0;
-      let score = 0;
-      if (val.length >= 6) score++;
-      if (val.length >= 10 || (/[A-Z]/.test(val) && val.length >= 8)) score++;
-      if (/[0-9]/.test(val)) score++;
-      if (/[^A-Za-z0-9]/.test(val)) score++;
-      return Math.max(1, Math.min(score, 4));
-    }
-
-    function updateStrengthUI(score) {
-      strengthContainer.classList.remove(
-        "password-strength--1",
-        "password-strength--2",
-        "password-strength--3",
-        "password-strength--4"
-      );
-
-      if (score > 0) {
-        strengthContainer.classList.add(`password-strength--${score}`);
+  if (passInput && meterFill) {
+    passInput.addEventListener("input", (e) => {
+      const val = e.target.value;
+      if (!val) {
+        meterFill.style.width = "0%";
+        if (meterLabel) {
+          meterLabel.textContent = "";
+        }
+        return;
       }
 
-      if (!label) return;
+      let strength = 0;
+      if (val.length >= 6) strength += 30;
+      if (val.match(/[A-Z]/)) strength += 20;
+      if (val.match(/[0-9]/)) strength += 20;
+      if (val.match(/[^a-zA-Z0-9]/)) strength += 30;
 
-      switch (score) {
-        case 0:
-          label.textContent = "Digite uma senha";
-          label.style.color = "var(--text-muted)";
-          break;
-        case 1:
-          label.textContent = "Senha muito fraca";
-          label.style.color = "#ef4444";
-          break;
-        case 2:
-          label.textContent = "Senha razoável";
-          label.style.color = "#f59e0b";
-          break;
-        case 3:
-          label.textContent = "Boa senha";
-          label.style.color = "#38bdf8";
-          break;
-        case 4:
-          label.textContent = "Senha forte e segura";
-          label.style.color = "#22c55e";
-          break;
+      meterFill.style.width = strength + "%";
+
+      if (strength <= 30) {
+        meterFill.style.backgroundColor = "#ef4444"; // Vermelho
+        meterFill.style.boxShadow = "none";
+        if (meterLabel) {
+          meterLabel.textContent = "Senha fraca";
+          meterLabel.style.color = "#ef4444";
+        }
+      } else if (strength <= 70) {
+        meterFill.style.backgroundColor = "var(--puc-amber)"; // Âmbar
+        meterFill.style.boxShadow = "none";
+        if (meterLabel) {
+          meterLabel.textContent = "Senha razoável";
+          meterLabel.style.color = "var(--puc-amber)";
+        }
+      } else {
+        meterFill.style.backgroundColor = "var(--puc-cyan)"; // Ciano Neon
+        meterFill.style.boxShadow = "0 0 12px var(--puc-cyan)";
+        if (meterLabel) {
+          meterLabel.textContent = "Senha forte e segura";
+          meterLabel.style.color = "var(--puc-cyan)";
+        }
       }
-    }
-
-    passwordInput.addEventListener("input", (e) => {
-      const val = e.target.value.trim();
-      const score = val.length === 0 ? 0 : computeStrength(val);
-      updateStrengthUI(score);
     });
   }
 });

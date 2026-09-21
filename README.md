@@ -136,7 +136,7 @@ src/
 
 ## 👥 Integrantes da Dupla (Pair Programming)
 
-- **Marcelo**
-- **Colega de Dupla**
+- **Marcelo Gomes de Oliveira Junior**
+- **Victor Cândido Leite**
 
 *Pontifícia Universidade Católica de Minas Gerais — ICEI*

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PUC Minas - Portal de Autenticação</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+    <!-- Bibliotecas Locais (Zero Dependência Externa) -->
+    <script th:src="@{/js/vendor/three.min.js}"></script>
+    <script th:src="@{/js/vendor/GLTFLoader.js}"></script>
+    <script th:src="@{/js/vendor/gsap.min.js}"></script>
+    <script th:src="@{/js/vendor/vanilla-tilt.min.js}"></script>
+</head>
+<body>
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+
+    <div class="auth-shell">
+        <!-- Vitrine 3D Institucional PUC Minas -->
+        <div class="auth-visual">
+            <div class="auth-brand-badge">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                </svg>
+                PUC Minas
+            </div>
+            <h1 class="auth-visual-title">Portal do Aluno</h1>
+            <p class="auth-visual-subtitle">Engenharia de Software</p>
+
+            <div class="canvas-container" id="puc-3d-container">
+                <canvas id="puc-3d-canvas"></canvas>
+                <img id="puc-3d-fallback" class="canvas-fallback-img" th:src="@{/images/brasao_puc.svg}" alt="Brasão PUC Minas">
+            </div>
+        </div>
+
+        <!-- Formulário de Autenticação em Glassmorphism -->
+        <div class="auth-main">
+            <div class="auth-card">
+                <div class="auth-header">
+                    <h2 class="auth-title">Acesso ao Sistema</h2>
+                    <p class="auth-subtitle">Informe suas credenciais institucionais para entrar</p>
+                </div>
+
+                <!-- Alertas de Feedback -->
+                <div th:if="${errorMessage}" class="alert alert-error">
+                    <svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                    </svg>
+                    <span th:text="${errorMessage}"></span>
+                </div>
+
+                <div th:if="${successMessage}" class="alert alert-success">
+                    <svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                    <span th:text="${successMessage}"></span>
+                </div>
+
+                <div th:if="${infoMessage}" class="alert alert-info">
+                    <svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                    </svg>
+                    <span th:text="${infoMessage}"></span>
+                </div>
+
+                <!-- Formulário Spring Security -->
+                <form th:action="@{/login}" method="post">
+                    <div class="form-grid">
+                        <div class="input-group">
+                            <label class="input-label" for="username">Usuário ou E-mail</label>
+                            <div class="input-container">
+                                <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="12" cy="7" r="4"></circle>
+                                </svg>
+                                <input type="text" id="username" name="username" class="input-control" placeholder="seu.usuario ou email@pucminas.br" required autofocus>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label class="input-label" for="password">Senha</label>
+                            <div class="input-container">
+                                <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                </svg>
+                                <input type="password" id="password" name="password" class="input-control" placeholder="••••••••" required>
+                                <button type="button" class="toggle-password" data-target="password" aria-label="Mostrar senha">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="auth-links">
+                        <a th:href="@{/recoverpassword}" class="auth-link">Esqueceu sua senha?</a>
+                    </div>
+
+                    <button type="submit" class="btn-primary">
+                        <span>Acessar Portal</span>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </button>
+                </form>
+
+                <div class="auth-footer">
+                    Não possui uma conta? <a th:href="@{/register}">Cadastre-se aqui</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts de Visualização e Efeitos -->
+    <script th:src="@{/js/puc3d.js}"></script>
+    <script th:src="@{/js/app.js}"></script>
+</body>
+</html>

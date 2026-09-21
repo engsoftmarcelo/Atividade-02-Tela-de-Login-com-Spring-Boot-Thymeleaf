@@ -8,6 +8,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/style.css}">
+
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
     <div class="bg-glow-1"></div>
@@ -95,6 +97,17 @@
                                 </svg>
                             </button>
                         </div>
+                    </div>
+
+                    <!-- =================================================
+            GOOGLE reCAPTCHA
+            ================================================= -->
+
+                    <div class="recaptcha-container">
+                        <div
+                                class="g-recaptcha"
+                                th:attr="data-sitekey=${recaptchaSiteKey}"
+                        ></div>
                     </div>
 
                     <div class="form-links stagger-item">

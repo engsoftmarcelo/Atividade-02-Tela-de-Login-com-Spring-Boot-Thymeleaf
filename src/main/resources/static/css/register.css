@@ -1,0 +1,126 @@
+/* =========================================
+   register.css — Estilos específicos da página de Cadastro
+   ========================================= */
+
+/* Card de cadastro mais alto para acomodar mais campos */
+.register-card {
+    max-width: 480px;
+    max-height: 90vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(56, 189, 248, 0.3) transparent;
+}
+
+.register-card::-webkit-scrollbar {
+    width: 5px;
+}
+
+.register-card::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.register-card::-webkit-scrollbar-thumb {
+    background: rgba(56, 189, 248, 0.3);
+    border-radius: 999px;
+}
+
+/* Header do cadastro */
+.register-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.register-icon-wrapper {
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, var(--puc-amber), rgba(251, 191, 36, 0.3));
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.2rem;
+    color: var(--bg-dark);
+    box-shadow: 0 8px 24px rgba(251, 191, 36, 0.25);
+    animation: pulseGlowAmber 3s ease-in-out infinite;
+}
+
+@keyframes pulseGlowAmber {
+    0%, 100% { box-shadow: 0 8px 24px rgba(251, 191, 36, 0.25); }
+    50% { box-shadow: 0 8px 32px rgba(251, 191, 36, 0.45); }
+}
+
+.register-header h2 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
+    margin-bottom: 0.35rem;
+}
+
+.register-header .subtitle {
+    color: var(--text-secondary);
+    font-size: 0.92rem;
+    line-height: 1.5;
+}
+
+/* Seções do formulário */
+.register-section {
+    margin-top: 1.4rem;
+    margin-bottom: 0.8rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.register-section:first-of-type {
+    border-top: none;
+    padding-top: 0;
+    margin-top: 0;
+}
+
+.section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--puc-cyan);
+    padding: 4px 10px;
+    background: rgba(56, 189, 248, 0.08);
+    border: 1px solid rgba(56, 189, 248, 0.15);
+    border-radius: 6px;
+}
+
+/* Linha dupla de campos (CPF + RG) */
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+}
+
+@media (max-width: 500px) {
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Animação de entrada dos elementos do card */
+.register-card > * {
+    animation: fadeSlideUp 0.5s ease-out both;
+}
+
+.register-card > *:nth-child(1) { animation-delay: 0.05s; }
+.register-card > *:nth-child(2) { animation-delay: 0.1s; }
+.register-card > *:nth-child(3) { animation-delay: 0.15s; }
+
+@keyframes fadeSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

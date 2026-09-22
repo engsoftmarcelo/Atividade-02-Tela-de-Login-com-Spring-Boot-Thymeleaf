@@ -1,0 +1,164 @@
+/* =========================================
+   error.css — Estilos específicos da página de Erro
+   ========================================= */
+
+/* Layout centralizado para erro */
+.error-layout {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+/* Card de erro */
+.error-glass-card {
+    max-width: 480px;
+    width: 100%;
+    padding: 3rem 2.5rem;
+    border-radius: 22px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px) saturate(120%);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    text-align: center;
+    animation: errorCardIn 0.6s ease-out both;
+}
+
+@keyframes errorCardIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Ícone de erro */
+.error-icon-wrapper {
+    width: 80px;
+    height: 80px;
+    background: var(--danger-bg);
+    border: 2px solid var(--danger-border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    color: var(--danger);
+    animation: errorIconPulse 2s ease-in-out infinite;
+}
+
+@keyframes errorIconPulse {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.25);
+    }
+    50% {
+        box-shadow: 0 0 0 12px rgba(239, 68, 68, 0);
+    }
+}
+
+/* Ícone tremendo suavemente */
+.error-icon-wrapper svg {
+    animation: errorShake 0.6s ease-in-out 0.3s;
+}
+
+@keyframes errorShake {
+    0%, 100% { transform: rotate(0deg); }
+    20% { transform: rotate(-8deg); }
+    40% { transform: rotate(8deg); }
+    60% { transform: rotate(-5deg); }
+    80% { transform: rotate(5deg); }
+}
+
+/* Título do erro */
+.error-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #ffffff 40%, #fca5a5 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.75rem;
+}
+
+/* Mensagem de erro */
+.error-message {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 1.8rem;
+}
+
+/* Detalhes técnicos */
+.error-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+}
+
+.error-detail-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.4rem 0;
+}
+
+.error-detail-item:not(:last-child) {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.detail-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+}
+
+.detail-value {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    font-family: 'Plus Jakarta Sans', monospace;
+}
+
+/* Ações de erro */
+.error-actions {
+    margin-bottom: 1.5rem;
+}
+
+.error-actions .btn-primary {
+    text-decoration: none;
+}
+
+/* Footer do erro */
+.error-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: var(--text-muted);
+    font-size: 0.78rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+@media (max-width: 500px) {
+    .error-glass-card {
+        padding: 2rem 1.5rem;
+    }
+
+    .error-title {
+        font-size: 1.4rem;
+    }
+}

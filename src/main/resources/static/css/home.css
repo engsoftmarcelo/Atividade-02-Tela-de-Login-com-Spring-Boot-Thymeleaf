@@ -1,0 +1,92 @@
+/* =========================================
+   home.css — Estilos específicos da página Home (Aluno)
+   ========================================= */
+
+/* Badge do usuário na navbar */
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.nav-user-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    background: rgba(56, 189, 248, 0.08);
+    border: 1px solid rgba(56, 189, 248, 0.2);
+    border-radius: 9999px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--puc-cyan);
+}
+
+/* Badge de role do perfil */
+.home-role-badge {
+    display: inline-block;
+    padding: 2px 10px;
+    background: rgba(56, 189, 248, 0.12);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    border-radius: 6px;
+    color: var(--puc-cyan) !important;
+    font-size: 0.78rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.05em;
+}
+
+/* Animações de entrada */
+.home-glass-card > * {
+    animation: homeSlideUp 0.6s ease-out both;
+}
+
+.home-glass-card > *:nth-child(1) { animation-delay: 0.05s; }
+.home-glass-card > *:nth-child(2) { animation-delay: 0.1s; }
+.home-glass-card > *:nth-child(3) { animation-delay: 0.15s; }
+.home-glass-card > *:nth-child(4) { animation-delay: 0.2s; }
+.home-glass-card > *:nth-child(5) { animation-delay: 0.25s; }
+.home-glass-card > *:nth-child(6) { animation-delay: 0.3s; }
+
+@keyframes homeSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Profile items hover */
+.profile-item {
+    transition: all 0.25s ease;
+}
+
+.profile-item:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+/* Navbar animação */
+.home-nav {
+    animation: navSlideDown 0.4s ease-out both;
+}
+
+@keyframes navSlideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 600px) {
+    .nav-user-badge {
+        display: none;
+    }
+}

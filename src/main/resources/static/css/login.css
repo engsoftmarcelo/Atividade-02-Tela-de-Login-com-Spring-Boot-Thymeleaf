@@ -1,0 +1,84 @@
+/* =========================================
+   login.css — Estilos específicos da página de Login
+   ========================================= */
+
+/* Header do card de login */
+.login-header {
+    text-align: center;
+    margin-bottom: 1.8rem;
+}
+
+.login-icon-wrapper {
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, var(--puc-cyan), rgba(56, 189, 248, 0.3));
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.2rem;
+    color: var(--text-primary);
+    box-shadow: 0 8px 24px rgba(56, 189, 248, 0.25);
+    animation: pulseGlow 3s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+    0%, 100% { box-shadow: 0 8px 24px rgba(56, 189, 248, 0.25); }
+    50% { box-shadow: 0 8px 32px rgba(56, 189, 248, 0.45); }
+}
+
+.login-header h2 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
+    margin-bottom: 0.35rem;
+}
+
+.login-header .subtitle {
+    color: var(--text-secondary);
+    font-size: 0.92rem;
+    line-height: 1.5;
+}
+
+/* Container do reCAPTCHA */
+.recaptcha-container {
+    display: flex;
+    justify-content: center;
+    margin: 1.2rem 0;
+    transform: scale(0.92);
+    transform-origin: center;
+}
+
+/* Animação de entrada dos elementos do card */
+.glass-card > * {
+    animation: fadeSlideUp 0.5s ease-out both;
+}
+
+.glass-card > *:nth-child(1) { animation-delay: 0.05s; }
+.glass-card > *:nth-child(2) { animation-delay: 0.1s; }
+.glass-card > *:nth-child(3) { animation-delay: 0.15s; }
+.glass-card > *:nth-child(4) { animation-delay: 0.2s; }
+.glass-card > *:nth-child(5) { animation-delay: 0.25s; }
+.glass-card > *:nth-child(6) { animation-delay: 0.3s; }
+
+@keyframes fadeSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Efeito hover no input que ilumina o card */
+.glass-card:hover {
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
+/* Botão de toggle de senha */
+.toggle-password svg {
+    transition: color 0.2s ease;
+}

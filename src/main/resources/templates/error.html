@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Erro | PUC Minas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/error.css}">
+</head>
+<body>
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+
+    <div class="error-layout">
+        <div class="error-glass-card">
+            <!-- Ícone de erro animado -->
+            <div class="error-icon-wrapper">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+            </div>
+
+            <h1 class="error-title">Ops! Algo deu errado</h1>
+
+            <!-- Mensagem de erro dinâmica do controller -->
+            <p class="error-message"
+               th:if="${erro}"
+               th:text="${erro}">Ocorreu um erro inesperado.</p>
+
+            <!-- Mensagem genérica se nenhum erro foi passado -->
+            <p class="error-message"
+               th:unless="${erro}">Ocorreu um erro inesperado. Por favor, tente novamente mais tarde.</p>
+
+            <!-- Detalhes técnicos (se disponíveis do Spring Boot) -->
+            <div class="error-details" th:if="${status}">
+                <div class="error-detail-item">
+                    <span class="detail-label">Código</span>
+                    <span class="detail-value" th:text="${status}">500</span>
+                </div>
+                <div class="error-detail-item" th:if="${error}">
+                    <span class="detail-label">Tipo</span>
+                    <span class="detail-value" th:text="${error}">Internal Server Error</span>
+                </div>
+                <div class="error-detail-item" th:if="${path}">
+                    <span class="detail-label">Caminho</span>
+                    <span class="detail-value" th:text="${path}">/</span>
+                </div>
+            </div>
+
+            <!-- Ações -->
+            <div class="error-actions">
+                <a th:href="@{/login}" class="btn-primary">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                    <span>Voltar ao Login</span>
+                </a>
+            </div>
+
+            <div class="error-footer">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+                <span>PUC Minas • Sistema de Autenticação</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
